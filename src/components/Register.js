@@ -63,6 +63,18 @@ function Register() {
             placeholder="Enter your password"
           />
         </div>
+
+        <div class="mb-6">
+          <input
+            id="checkbox"
+            type="checkbox"
+            class="enabled:hover:border-gray-400  mx-2 checked:bg-gray-500"
+          />
+          <label class=" text-gray-700 text-sm font-bold " for="checkbox">
+            J'accepte les conditions générales et la politique de
+            confidentialité
+          </label>
+        </div>
         <div className="flex items-center justify-between">
           <button
             class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
