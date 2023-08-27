@@ -9,8 +9,13 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const emailError = document.getElementsByClassName("emailError")[0];
+
+    // Nettoyer les messages d'erreur précédents
+    const emailError = document.querySelector(".emailError");
     const passwordError = document.querySelector(".passwordError");
+    emailError.innerHTML = "";
+    passwordError.innerHTML = "";
+
     axios({
       method: "POST",
       url: `${process.env.REACT_APP_BASE_URL}api/user/login`,
@@ -21,18 +26,22 @@ function Login() {
       },
     })
       .then((res) => {
-        if (res.status === 401) {
-          console.log(res.data.message);
-          emailError.innerHTML = res.data.message;
-          passwordError.innerHTML = res.data.errors.password;
-        } else {
-          window.location.href = "/home";
-        }
+        // Rediriger vers la page d'accueil en cas de succès
+        window.location.href = "/home";
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response && err.response.status === 401) {
+          /*console.log("Échec de la connexion :", err.response.data.message);
+          emailError.innerHTML = err.response.data.message;
+          passwordError.innerHTML = err.response.data.errors.password;
+          console.log(err);*/
+          passwordError.innerHTML = "Email or password incorrect";
+        } else {
+          passwordError.innerHTML = "Problème de connexion";
+        }
       });
   };
+
   return (
     <div className="w-full h-full h-screen flex justify-center items-center background-image bg-cyan-500 hover:bg-cyan-600 ">
       <form
@@ -68,7 +77,7 @@ function Login() {
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700  leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
             placeholder="Enter your password"
@@ -76,8 +85,8 @@ function Login() {
             value={password}
           />
         </div>
-        <div className="passwordError"></div>
-        <div className="flex items-center justify-between">
+        <span className="passwordError text-red-500 text-sm font-bold my-8"></span>
+        <div className="flex items-center justify-between mt-2">
           <button
             className="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
