@@ -4,7 +4,6 @@ import axios from "axios";
 import Login from "./components/Login"; // Importez votre composant de connexion
 import Home from "./components/Home";
 import Register from "./components/Register";
-import { Navigate } from "react-router-dom";
 import { UidContext } from "./components/AppContext";
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
           setUser(response.data.user._id);
         }
       } catch (error) {
-        console.log(error);
+        //console.log(error);
         console.log(
           "Une erreur est survenue lors de la vérification de l'authentification."
         );
@@ -41,10 +40,7 @@ function App() {
         <Routes>
           <Route path="/" element={user ? <Home /> : <Login />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/home"
-            element={user ? <Home /> : <Navigate to="/login" />}
-          />
+          <Route path="/home" element={user ? <Home /> : <Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
