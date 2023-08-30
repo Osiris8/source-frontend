@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
-import Login from "./components/Login"; // Importez votre composant de connexion
+import { useDispatch } from "react-redux"; // Importez le hook useDispatch
+import { getUserProfile } from "./actions/userActions"; // Importez votre action pour mettre à jour l'état de l'utilisateur
+import Login from "./components/Login";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import { UidContext } from "./components/AppContext";
 
 function App() {
   const [user, setUser] = useState(null);
+  const dispatch = useDispatch(); // Utilisez le hook useDispatch ici
 
   useEffect(() => {
     // Fonction pour vérifier l'authentification de l'utilisateur
@@ -24,7 +27,6 @@ function App() {
           setUser(response.data.user._id);
         }
       } catch (error) {
-        //console.log(error);
         console.log(
           "Une erreur est survenue lors de la vérification de l'authentification."
         );
@@ -32,7 +34,10 @@ function App() {
     };
 
     checkAuthentication();
-  }, [user]);
+    if (user) {
+      dispatch(getUserProfile(user)); // Utilisez dispatch pour mettre à jour l'état de l'utilisateur
+    }
+  }, [user, dispatch]); // Assurez-vous d'inclure le dispatch dans le tableau de dépendances
 
   return (
     <UidContext.Provider value={user}>
