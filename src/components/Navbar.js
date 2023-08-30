@@ -2,9 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { UidContext } from "./AppContext";
 import Logout from "./Logout";
+import { useSelector } from "react-redux";
 
 function Navbar() {
   const uid = React.useContext(UidContext);
+  const userProfile = useSelector((state) => state.user.userProfile);
+
   return (
     <nav className="bg-cyan-500 p-4 flex justify-between items-center">
       <div className="flex items-center">
@@ -24,6 +27,11 @@ function Navbar() {
         <Link to="/about" className="text-white">
           À propos
         </Link>
+        {userProfile && userProfile.firstname && (
+          <Link to="/about" className="text-white">
+            Hello {userProfile.firstname}
+          </Link>
+        )}
         {uid ? (
           <Link to="/logout" className="text-white">
             <Logout />
