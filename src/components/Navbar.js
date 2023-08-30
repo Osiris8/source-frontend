@@ -6,7 +6,7 @@ import Logout from "./Logout";
 function Navbar() {
   const uid = React.useContext(UidContext);
   return (
-    <nav className="bg-blue-500 p-4 flex justify-between items-center">
+    <nav className="bg-cyan-500 p-4 flex justify-between items-center">
       <div className="flex items-center">
         <img
           src="https://cdn-icons-png.flaticon.com/512/124/124010.png"
