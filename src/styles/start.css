@@ -110,3 +110,7 @@ html {
   background-size: cover;
   background-position: center center;
 }
+
+.profileCover {
+  object-fit: cover;
+}
