@@ -29,7 +29,7 @@ function Navbar() {
         </Link>
         {userProfile && userProfile.firstname && (
           <Link to="/about" className="text-white">
-            Hello {userProfile.firstname}
+            {userProfile.firstname}
           </Link>
         )}
         {uid ? (
