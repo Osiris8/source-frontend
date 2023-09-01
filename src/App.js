@@ -6,6 +6,8 @@ import { getUserProfile } from "./actions/userActions"; // Importez votre action
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Register from "./components/Register";
+import Profile from "./components/Profile";
+import EditProfile from "./components/EditProfile";
 import { UidContext } from "./components/AppContext";
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/home" element={user ? <Home /> : <Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profil" element={<Profile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
         </Routes>
       </Router>
     </UidContext.Provider>
