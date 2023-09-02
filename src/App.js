@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
 import EditProfile from "./components/EditProfile";
+import EditBiography from "./components/EditBiography";
 import { UidContext } from "./components/AppContext";
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/profil" element={<Profile />} />
           <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/edit-bio" element={<EditBiography />} />
         </Routes>
       </Router>
     </UidContext.Provider>
