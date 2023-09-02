@@ -3,6 +3,7 @@ import axios from "axios";
 import { GET_USER } from "./types"; // Importez le type d'action
 import { GET_USER_PROFILE } from "./types";
 import { UPLOAD_PICTURE } from "./types";
+import { UPDATE_USER_BIOGRAPHY } from "./types";
 
 // Action creator pour mettre à jour l'état de l'utilisateur
 export const getUser = (userId) => {
@@ -29,7 +30,7 @@ export const getUserProfile = (userId) => {
 
 // Action creator
 export const uploadPicture = (data, userId) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     return axios
       .put(
         `${process.env.REACT_APP_BASE_URL}api/user/uploadProfile/${userId}`,
@@ -48,5 +49,35 @@ export const uploadPicture = (data, userId) => {
         console.log(err);
         console.log("ça ne passe pas");
       });
+  };
+};
+
+export const updateUserBiographySuccess = (updatedUser) => ({
+  type: UPDATE_USER_BIOGRAPHY,
+  payload: updatedUser,
+});
+
+// Thunk to update user biography
+export const updateUserBiography = (data, userId) => {
+  return async (dispatch) => {
+    try {
+      // Envoyez la demande de mise à jour au serveur
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}api/user/${userId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // Si vous avez besoin d'authentification
+        }
+      );
+
+      // Une fois la mise à jour effectuée avec succès, envoyez l'action Redux
+      dispatch(updateUserBiographySuccess(response.data));
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de la biographie :", error);
+      // Vous pouvez gérer les erreurs ici, par exemple, en dispatchant une action d'erreur
+    }
   };
 };
