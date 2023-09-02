@@ -1,4 +1,8 @@
-import { GET_USER_PROFILE, UPLOAD_PICTURE } from "../actions/types";
+import {
+  GET_USER_PROFILE,
+  UPLOAD_PICTURE,
+  UPDATE_USER_BIOGRAPHY,
+} from "../actions/types";
 
 const initialState = {
   userProfile: null,
@@ -12,6 +16,11 @@ const userReducer = (state = initialState, action) => {
         userProfile: action.payload,
       };
     case UPLOAD_PICTURE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    case UPDATE_USER_BIOGRAPHY:
       return {
         ...state,
         userProfile: action.payload,
