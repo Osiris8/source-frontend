@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../styles/start.css";
+import formatDateToReadableDate from "../utils/utils";
 
 function Profile() {
   const userProfile = useSelector((state) => state.user.userProfile);
@@ -27,6 +28,11 @@ function Profile() {
           {userProfile && <p className="text-gray-600">{userProfile.email}</p>}
           {userProfile && userProfile.biographie && (
             <p className="text-gray-600 mt-2">{userProfile.biographie}</p>
+          )}
+          {userProfile && userProfile.createdAt && (
+            <p className="text-gray-600 mt-2">
+              Membre depuis le {formatDateToReadableDate(userProfile.createdAt)}
+            </p>
           )}
         </div>
         <div className="mt-6">
