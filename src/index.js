@@ -4,7 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
+import { getAllUsers } from "./actions/usersActions";
 import store from "./store/store";
+
+store.dispatch(getAllUsers());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
