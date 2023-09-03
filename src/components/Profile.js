@@ -4,10 +4,10 @@ import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../styles/start.css";
 import formatDateToReadableDate from "../utils/utils";
+import NavigationTabs from "./NavigationTabs";
 
 function Profile() {
   const userProfile = useSelector((state) => state.user.userProfile);
-
   return (
     <>
       <Navbar />
@@ -35,18 +35,7 @@ function Profile() {
             </p>
           )}
         </div>
-        <div className="mt-6">
-          {userProfile && (
-            <p className="text-lg font-semibold mb-2">
-              Following: {userProfile.following.length}
-            </p>
-          )}
-          {userProfile && (
-            <p className="text-lg font-semibold mb-2">
-              Followers: {userProfile.followers.length}
-            </p>
-          )}
-        </div>
+        <NavigationTabs />
         <Link
           to="/edit-profile"
           className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition duration-300 mt-4"
