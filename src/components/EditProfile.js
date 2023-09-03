@@ -4,8 +4,9 @@ import Navbar from "./Navbar";
 import { uploadPicture } from "../actions/userActions";
 
 function EditProfile() {
-  const userProfile = useSelector((state) => state.user.userProfile);
   const dispatch = useDispatch();
+  const userProfile = useSelector((state) => state.user.userProfile);
+
   const [file, setFile] = useState();
 
   const handleSubmit = (e) => {
