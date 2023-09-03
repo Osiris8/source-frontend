@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Follower from "./Follower"; // Importez le composant Follower
 import Following from "./Following"; // Importez le composant Following
-import { useSelector, useDispatch } from "react-redux";
 
 function NavigationTabs() {
   const [showFollower, setShowFollower] = useState(false);
@@ -16,7 +15,7 @@ function NavigationTabs() {
     setShowFollower(false);
     setActiveButton("abonnements");
   };
-  const usersProfiles = useSelector((state) => state.user.allUsers);
+
   return (
     <>
       <div className="flex justify-center mt-4">
