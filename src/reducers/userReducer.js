@@ -18,6 +18,7 @@ const userReducer = (state = initialState, action) => {
     case UPLOAD_PICTURE:
       return {
         ...state,
+
         userProfile: action.payload,
       };
     case UPDATE_USER_BIOGRAPHY:
