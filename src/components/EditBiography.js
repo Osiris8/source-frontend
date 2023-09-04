@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Navbar from "./Navbar";
+
 import { updateUserBiography } from "../actions/userActions";
 
 function EditBiography() {
@@ -20,8 +20,7 @@ function EditBiography() {
 
   return (
     <>
-      <Navbar />
-      <div className="bg-white p-6 rounded shadow-md">
+      <div className="bg-white p-8 border shadow-md rounded-lg mt-8">
         <h2 className="text-2xl font-semibold mb-4">Modifier la biographie</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
