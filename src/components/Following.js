@@ -12,9 +12,13 @@ function Following() {
   const userProfile = useSelector((state) => state.user.userProfile);
 
   // Filtrer les utilisateurs que l'utilisateur connecté suit
-  const followingUsers = usersProfiles.filter((profile) =>
-    userProfile.following.includes(profile._id)
-  );
+
+  const followingUsers =
+    userProfile && userProfile.following
+      ? usersProfiles.filter((profile) =>
+          userProfile.following.includes(profile._id)
+        )
+      : [];
   return (
     <div className="bg-white p-4 flex items-center justify-between  rounded-lg m-5">
       <div className="flex flex-col items-center">
