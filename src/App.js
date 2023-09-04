@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux"; // Importez le hook useDispatch
-import { getUserProfile } from "./actions/userActions"; // Importez votre action pour mettre à jour l'état de l'utilisateur
+import { useDispatch } from "react-redux";
+import { getUserProfile } from "./actions/userActions";
+import { getAllUsers } from "./actions/usersActions";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
-import EditProfile from "./components/EditProfile";
+import UploadImage from "./components/UploadImage";
 import EditBiography from "./components/EditBiography";
 import { UidContext } from "./components/AppContext";
 
 function App() {
   const [user, setUser] = useState(null);
-  const dispatch = useDispatch(); // Utilisez le hook useDispatch ici
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // Fonction pour vérifier l'authentification de l'utilisateur
@@ -38,9 +39,10 @@ function App() {
 
     checkAuthentication();
     if (user) {
-      dispatch(getUserProfile(user)); // Utilisez dispatch pour mettre à jour l'état de l'utilisateur
+      dispatch(getUserProfile(user));
+      dispatch(getAllUsers());
     }
-  }, [user, dispatch]); // Assurez-vous d'inclure le dispatch dans le tableau de dépendances
+  }, [user, dispatch]);
 
   return (
     <UidContext.Provider value={user}>
@@ -51,7 +53,7 @@ function App() {
           <Route path="/home" element={user ? <Home /> : <Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profil" element={<Profile />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/edit-image" element={<UploadImage />} />
           <Route path="/edit-bio" element={<EditBiography />} />
         </Routes>
       </Router>
