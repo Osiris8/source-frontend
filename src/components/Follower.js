@@ -1,7 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { followUser } from "../actions/userActions";
 
 function Follower() {
+  const dispatch = useDispatch();
   const followingUsers = useSelector((state) => state.users.allUsers);
   const currentUser = useSelector((state) => state.user.userProfile);
 
@@ -9,6 +12,19 @@ function Follower() {
   const followers = followingUsers.filter((profile) =>
     currentUser.followers.includes(profile._id)
   );
+
+  // Fonction pour gérer le suivi d'un utilisateur
+  const handleFollow = (followerId, userIdToFollow) => {
+    // Utilisez l'action followUser pour effectuer le suivi
+    // Remarque : vous devrez implémenter l'action followUser dans vos actions Redux
+    dispatch(followUser(followerId, userIdToFollow)); // Ajoutez l'action followUser
+  };
+
+  /*useEffect(() => {
+    const followers = followingUsers.filter((profile) =>
+      currentUser.followers.includes(profile._id)
+    );
+  }, [followingUsers, currentUser])*/
 
   return (
     <div>
@@ -30,7 +46,10 @@ function Follower() {
               <p className="text-gray-600">{profile.biographie}</p>
             </div>
           </div>
-          <button className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition duration-300">
+          <button
+            onClick={() => handleFollow(profile._id, currentUser._id)}
+            className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition duration-300"
+          >
             Suivre
           </button>
         </div>
