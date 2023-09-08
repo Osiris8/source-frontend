@@ -1,15 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import "../styles/start.css";
 import formatDateToReadableDate from "../utils/utils";
-import NavigationTabs from "./NavigationTabs";
 import UploadImage from "./UploadImage";
 import EditBiography from "./EditBiography";
+import { followUser } from "../actions/userActions";
 
 function Profile() {
   const userProfile = useSelector((state) => state.user.userProfile);
+
   return (
     <>
       <Navbar />
@@ -44,13 +45,6 @@ function Profile() {
               </p>
             )}
           </div>
-          <NavigationTabs />
-          <Link
-            to="/edit-profile"
-            className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600 transition duration-300 mt-4"
-          >
-            Modifier le profil
-          </Link>
         </div>
         <div className="w-full md:w-2/3 p-4 order-1 md:order-3">
           <EditBiography />
