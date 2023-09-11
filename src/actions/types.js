@@ -6,3 +6,5 @@ export const UPDATE_USER_BIOGRAPHY = "UPDATE_USER_BIOGRAPHY";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 
 export const GET_ALL_POSTS = "GET_ALL_POSTS";
+export const LIKE_POST = "LIKE_POST";
+export const UNLIKE_POST = "UNLIKE_POST";
