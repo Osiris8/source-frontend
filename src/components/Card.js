@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import formatDateToReadableDate from "../utils/utils";
+import LikeButton from "./LikeButton";
 
 function Card({ post }) {
   const [isLoading, setIsLoading] = useState(true);
+
   const usersProfiles = useSelector((state) => state.users.allUsers);
 
   useEffect(() => {
@@ -39,6 +41,7 @@ function Card({ post }) {
                   </div>
 
                   <p className="mt-2">{post.message}</p>
+                  <LikeButton post={post} />
                   <div>
                     {post.image && (
                       <img
