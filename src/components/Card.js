@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import formatDateToReadableDate from "../utils/utils";
 import LikeButton from "./LikeButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { updatePost } from "../actions/postActions";
 
 function Card({ post }) {
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [textUpdate, setTextUpdate] = useState("");
   const usersProfiles = useSelector((state) => state.users.allUsers);
+  const userProfile = useSelector((state) => state.user.userProfile);
+  const dispatch = useDispatch();
+  const updateMessage = () => {
+    if (textUpdate) {
+      dispatch(updatePost(post._id, textUpdate));
+      setIsUpdate(false);
+    }
+  };
 
   useEffect(() => {
     if (post) {
@@ -40,8 +52,38 @@ function Card({ post }) {
                     </p>
                   </div>
 
-                  <p className="mt-2">{post.message}</p>
-                  <LikeButton post={post} />
+                  {!isUpdate && <p className="mt-2">{post.message}</p>}
+                  {isUpdate && (
+                    <div className="flex flex-col ">
+                      <textarea
+                        className="mt-2 rounded-lg w-full"
+                        rows="5"
+                        cols="33"
+                        onChange={(e) => setTextUpdate(e.target.value)}
+                        default={post.message}
+                        autoFocus
+                      >
+                        {post.message}
+                      </textarea>
+                      <button
+                        onClick={updateMessage}
+                        className="self-end mt-2 bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Valider les changements
+                      </button>
+                    </div>
+                  )}
+                  {/* J'aime la magie de redux
+                  SI vous débutez avec React, le concept peut être difficile à comprendre au début.
+                  Mais tenez-bon, c'est un outil génial ! */}
+                  <div className="flex justify-between">
+                    <LikeButton post={post} />
+                    {userProfile && post.posterId === userProfile._id && (
+                      <button onClick={() => setIsUpdate(!isUpdate)}>
+                        <FontAwesomeIcon icon={faEdit} /> Éditer
+                      </button>
+                    )}
+                  </div>
                   <div>
                     {post.image && (
                       <img
