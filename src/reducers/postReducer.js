@@ -1,5 +1,5 @@
 import { GET_ALL_POSTS } from "../actions/types";
-import { LIKE_POST, UNLIKE_POST } from "../actions/types";
+import { LIKE_POST, UNLIKE_POST, UPDATE_POST } from "../actions/types";
 
 const initialState = {
   allPosts: [], // Initialiser le tableau des posts comme vide
@@ -45,6 +45,23 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         allPosts: updatedUnlikedPosts,
+      };
+    case UPDATE_POST:
+      const updatedPostId = action.payload.postId;
+      // Créez une nouvelle copie de allPosts avec les posts(message) mis à jour
+      const updatedPosts = state.allPosts.map((post) => {
+        if (post._id === updatedPostId) {
+          // Créez une nouvelle copie du post avec les posts(message) mis à jour
+          return {
+            ...post,
+            message: action.payload.message,
+          };
+        }
+        return post;
+      });
+      return {
+        ...state,
+        allPosts: updatedPosts,
       };
     default:
       return state;
