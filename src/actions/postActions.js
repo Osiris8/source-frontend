@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET_ALL_POSTS } from "./types";
 import { LIKE_POST, UNLIKE_POST } from "./types";
+import { UPDATE_POST } from "./types";
 
 export const getAllPosts = () => {
   return async (dispatch) => {
@@ -49,6 +50,21 @@ export const unlikePost = (postId, userId) => {
     })
       .then((res) => {
         dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updatePost = (postId, message) => {
+  return async (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_BASE_URL}api/post/` + postId,
+      data: { message },
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({ type: UPDATE_POST, payload: { postId, message } });
       })
       .catch((err) => console.log(err));
   };
