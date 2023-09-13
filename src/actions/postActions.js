@@ -2,6 +2,7 @@ import axios from "axios";
 import { GET_ALL_POSTS } from "./types";
 import { LIKE_POST, UNLIKE_POST } from "./types";
 import { UPDATE_POST } from "./types";
+import { DELETE_POST } from "./types";
 
 export const getAllPosts = () => {
   return async (dispatch) => {
@@ -65,6 +66,20 @@ export const updatePost = (postId, message) => {
     })
       .then((res) => {
         dispatch({ type: UPDATE_POST, payload: { postId, message } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const deletePost = (postId) => {
+  return async (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_BASE_URL}api/post/` + postId,
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_POST, payload: { postId } });
       })
       .catch((err) => console.log(err));
   };
