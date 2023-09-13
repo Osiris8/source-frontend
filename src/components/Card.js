@@ -5,6 +5,7 @@ import LikeButton from "./LikeButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { updatePost } from "../actions/postActions";
+import DeletePost from "./DeletePost";
 
 function Card({ post }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -79,9 +80,15 @@ function Card({ post }) {
                   <div className="flex justify-between">
                     <LikeButton post={post} />
                     {userProfile && post.posterId === userProfile._id && (
-                      <button onClick={() => setIsUpdate(!isUpdate)}>
-                        <FontAwesomeIcon icon={faEdit} /> Éditer
-                      </button>
+                      <div>
+                        <button
+                          onClick={() => setIsUpdate(!isUpdate)}
+                          className="mr-2"
+                        >
+                          <FontAwesomeIcon icon={faEdit} /> Éditer
+                        </button>
+                        <DeletePost _id={post._id} />
+                      </div>
                     )}
                   </div>
                   <div>
