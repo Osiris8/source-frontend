@@ -3,14 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import formatDateToReadableDate from "../utils/utils";
 import LikeButton from "./LikeButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faComment, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { updatePost } from "../actions/postActions";
 import DeletePost from "./DeletePost";
+import CommentPost from "./CommentPost";
 
 function Card({ post }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdate, setIsUpdate] = useState(false);
   const [textUpdate, setTextUpdate] = useState("");
+  const [showComment, setShowComment] = useState(false);
   const usersProfiles = useSelector((state) => state.users.allUsers);
   const userProfile = useSelector((state) => state.user.userProfile);
   const dispatch = useDispatch();
@@ -33,8 +35,9 @@ function Card({ post }) {
         {isLoading ? (
           <h1>Loading...</h1>
         ) : (
-          usersProfiles.map((user) => {
-            if (user._id === post.posterId) {
+          usersProfiles
+            .filter((user) => user._id === post.posterId)
+            .map((user) => {
               return (
                 <div key={post._id}>
                   <div className="flex items-center justify-between">
@@ -55,17 +58,15 @@ function Card({ post }) {
 
                   {!isUpdate && <p className="mt-2">{post.message}</p>}
                   {isUpdate && (
-                    <div className="flex flex-col ">
+                    <div className="flex flex-col">
                       <textarea
                         className="mt-2 rounded-lg w-full"
                         rows="5"
                         cols="33"
                         onChange={(e) => setTextUpdate(e.target.value)}
-                        default={post.message}
+                        defaultValue={post.message}
                         autoFocus
-                      >
-                        {post.message}
-                      </textarea>
+                      ></textarea>
                       <button
                         onClick={updateMessage}
                         className="self-end mt-2 bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
@@ -74,10 +75,15 @@ function Card({ post }) {
                       </button>
                     </div>
                   )}
-                  {/* J'aime la magie de redux
-                  SI vous débutez avec React, le concept peut être difficile à comprendre au début.
-                  Mais tenez-bon, c'est un outil génial ! */}
                   <div className="flex justify-between">
+                    <div className="">
+                      {showComment === false && (
+                        <button onClick={() => setShowComment(!showComment)}>
+                          <FontAwesomeIcon icon={faComment} /> Comment
+                        </button>
+                      )}
+                      {showComment && <CommentPost post={post} />}
+                    </div>
                     <LikeButton post={post} />
                     {userProfile && post.posterId === userProfile._id && (
                       <div>
@@ -107,15 +113,13 @@ function Card({ post }) {
                         allowFullScreen
                         playsInline
                         src={post.video.replace("/frontend/public", "")}
-                        frameborder="0"
+                        frameBorder="0"
                       ></iframe>
                     )}
                   </div>
                 </div>
               );
-            }
-            return null;
-          })
+            })
         )}
       </div>
     </div>
