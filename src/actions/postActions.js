@@ -3,6 +3,7 @@ import { GET_ALL_POSTS } from "./types";
 import { LIKE_POST, UNLIKE_POST } from "./types";
 import { UPDATE_POST } from "./types";
 import { DELETE_POST } from "./types";
+import { ADD_COMMENT } from "./types";
 
 export const getAllPosts = () => {
   return async (dispatch) => {
@@ -80,6 +81,21 @@ export const deletePost = (postId) => {
     })
       .then((res) => {
         dispatch({ type: DELETE_POST, payload: { postId } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const addComment = (postId, commenterId, commenterPseudo, comment) => {
+  return async (dispatch) => {
+    return axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_BASE_URL}api/post/comment/` + postId,
+      data: { commenterId, commenterPseudo, comment },
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({ type: ADD_COMMENT, payload: { postId, comment } });
       })
       .catch((err) => console.log(err));
   };
