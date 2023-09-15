@@ -4,6 +4,8 @@ import { LIKE_POST, UNLIKE_POST } from "./types";
 import { UPDATE_POST } from "./types";
 import { DELETE_POST } from "./types";
 import { ADD_COMMENT } from "./types";
+import { EDIT_COMMENT } from "./types";
+import { DELETE_COMMENT } from "./types";
 
 export const getAllPosts = () => {
   return async (dispatch) => {
@@ -96,6 +98,39 @@ export const addComment = (postId, commenterId, commenterPseudo, comment) => {
     })
       .then((res) => {
         dispatch({ type: ADD_COMMENT, payload: { postId, comment } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const editComment = (postId, commentId, comment) => {
+  return async (dispatch) => {
+    return axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_BASE_URL}api/post/editcomment/` + postId,
+      data: { commentId, comment },
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({
+          type: EDIT_COMMENT,
+          payload: { postId, commentId, comment },
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const deleteComment = (postId, commentId) => {
+  return async (dispatch) => {
+    return axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_BASE_URL}api/post/deletecomment/` + postId,
+      data: { commentId },
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_COMMENT, payload: { postId, commentId } });
       })
       .catch((err) => console.log(err));
   };
