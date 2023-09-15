@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import formatDateToReadableDate from "../utils/utils";
 import { addComment } from "../actions/postActions";
 import { getAllPosts } from "../actions/postActions";
+import EditDeleteComment from "./EditDeleteComment";
 
 function CommentPost({ post }) {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ function CommentPost({ post }) {
               </p>
             </div>
             <p className="ml-8 mb-2">{comment.comment}</p>
+            <EditDeleteComment comment={comment} postId={post._id} />
             <hr className="mb-4 border border-gray-400" />
           </div>
         );
