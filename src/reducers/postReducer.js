@@ -4,6 +4,8 @@ import {
   UNLIKE_POST,
   UPDATE_POST,
   DELETE_POST,
+  EDIT_COMMENT,
+  DELETE_COMMENT,
 } from "../actions/types";
 
 const initialState = {
@@ -77,6 +79,42 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         allPosts: deletedPosts,
+      };
+    case EDIT_COMMENT:
+      return {
+        ...state,
+        allPosts: state.allPosts.map((post) => {
+          if (post._id === action.payload.postId) {
+            return {
+              ...post,
+              comments: post.comments.map((comment) => {
+                if (comment._id === action.payload.commentId) {
+                  return {
+                    ...comment,
+                    comment: action.payload.comment,
+                  };
+                }
+                return comment;
+              }),
+            };
+          }
+          return post;
+        }),
+      };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        allPosts: state.allPosts.map((post) => {
+          if (post._id === action.payload.postId) {
+            return {
+              ...post,
+              comments: post.comments.filter(
+                (comment) => comment._id !== action.payload.commentId
+              ),
+            };
+          }
+          return post;
+        }),
       };
     default:
       return state;
