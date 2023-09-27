@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../actions/postActions";
+import NewPostFrom from "./NewPostFrom";
 import Navbar from "./Navbar";
 import Card from "./Card";
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
     <div>
       <Navbar />
       <div>
+        <NewPostFrom />
         {posts.map((post) => (
           <Card post={post} key={post._id} />
         ))}
