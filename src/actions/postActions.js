@@ -7,9 +7,6 @@ import { ADD_COMMENT } from "./types";
 import { EDIT_COMMENT } from "./types";
 import { DELETE_COMMENT } from "./types";
 import { ADD_POST } from "./types";
-import { ADD_POST_REQUEST } from "./types";
-import { ADD_POST_SUCCESS } from "./types";
-import { ADD_POST_FAILURE } from "./types";
 
 export const getAllPosts = () => {
   return async (dispatch) => {
@@ -140,39 +137,17 @@ export const deleteComment = (postId, commentId) => {
   };
 };
 
-export const addPostRequest = () => ({
-  type: ADD_POST_REQUEST,
-});
-
-export const addPostSuccess = (post) => ({
-  type: ADD_POST_SUCCESS,
-  payload: post,
-});
-
-export const addPostFailure = (error) => ({
-  type: ADD_POST_FAILURE,
-  payload: error,
-});
-
-// Thunk Action to Create a Post
 export const addPost = (data) => {
   return async (dispatch) => {
-    try {
-      dispatch(addPostRequest());
-
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}api/post/`,
-        data,
-        {
-          withCredentials: true, // Include credentials if necessary
-        }
-      );
-
-      const newPost = response.data;
-      dispatch(addPostSuccess(newPost));
-    } catch (error) {
-      console.error(error);
-      dispatch(addPostFailure("An error occurred while creating the post."));
-    }
+    return axios({
+      method: "post",
+      url: `${process.env.REACT_APP_BASE_URL}api/post`,
+      data: data,
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({ type: ADD_POST, payload: res.data });
+      })
+      .catch((err) => console.log(err));
   };
 };
