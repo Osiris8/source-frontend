@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import formatDateToReadableDate from "../utils/utils";
-import { addPost, getAllPosts } from "../actions/postActions";
+import { addPost } from "../actions/postActions";
 
 function NewPostFrom() {
   const [loadPost, setLoadPost] = useState(true);
@@ -35,19 +35,30 @@ function NewPostFrom() {
     setVideo("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const data = new FormData();
-    data.append("posterId", "userProfile._id");
-    console.log(data);
-    /*data.append("message", message);
+    /*const data = new FormData();
+    if (message || postPicture || video) {
+      data.append("posterId", userProfile._id);
+      data.append("message", message);
       if (file) data.append("file", file);
       data.append("video", video);
 
-      dispatch(addPost(data));
-      dispatch(getAllPosts());
-      cancelPost();*/
+      await dispatch(addPost(data));
+
+      cancelPost();
+      console.log(data);
+    } else {
+      alert("Veuillez entrer un message");
+    }*/
+    const data = {
+      posterId: userProfile._id,
+      message: message,
+      file: file,
+      video,
+    };
+    await dispatch(addPost(data));
+    cancelPost();
   };
 
   const cancelPost = () => {
@@ -135,7 +146,7 @@ function NewPostFrom() {
                 {message || postPicture || video ? (
                   <button
                     onClick={cancelPost}
-                    type="submit"
+                    type="button"
                     className="m-1 bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
                   >
                     Annuler
