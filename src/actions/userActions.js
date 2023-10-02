@@ -3,7 +3,6 @@ import axios from "axios";
 import { GET_USER_PROFILE } from "./types";
 import { UPLOAD_PICTURE } from "./types";
 import { UPDATE_USER_BIOGRAPHY } from "./types";
-
 export const getUserProfile = (userId) => {
   return async (dispatch) => {
     return axios
