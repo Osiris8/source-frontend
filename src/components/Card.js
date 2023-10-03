@@ -57,6 +57,26 @@ function Card({ post }) {
                   </div>
 
                   {!isUpdate && <p className="mt-2">{post.message}</p>}
+                  <div>
+                    {post.picture && (
+                      <img
+                        src={post.picture.replace("/frontend/public", "")}
+                        alt={post._id}
+                        className="mt-2 rounded-lg w-full"
+                      />
+                    )}
+                    {post.video && (
+                      <iframe
+                        className="mt-2 rounded-lg w-full"
+                        title="YouTube video player"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        playsInline
+                        src={post.video.replace("/frontend/public", "")}
+                        frameBorder="0"
+                      ></iframe>
+                    )}
+                  </div>
                   {isUpdate && (
                     <div className="flex flex-col">
                       <textarea
@@ -75,7 +95,7 @@ function Card({ post }) {
                       </button>
                     </div>
                   )}
-                  <div className="flex justify-between">
+                  <div className="flex justify-between mt-2">
                     <div className="">
                       {showComment === false && (
                         <button onClick={() => setShowComment(!showComment)}>
@@ -95,26 +115,6 @@ function Card({ post }) {
                         </button>
                         <DeletePost _id={post._id} />
                       </div>
-                    )}
-                  </div>
-                  <div>
-                    {post.image && (
-                      <img
-                        src={post.image.replace("/frontend/public", "")}
-                        alt={post._id}
-                        className="mt-2 rounded-lg w-full"
-                      />
-                    )}
-                    {post.video && (
-                      <iframe
-                        className="mt-2 rounded-lg w-full"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        playsInline
-                        src={post.video.replace("/frontend/public", "")}
-                        frameBorder="0"
-                      ></iframe>
                     )}
                   </div>
                 </div>
