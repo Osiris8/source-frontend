@@ -1,12 +1,11 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Navbar from "./Navbar";
-import { Link } from "react-router-dom";
+
 import "../styles/start.css";
 import formatDateToReadableDate from "../utils/utils";
 import UploadImage from "./UploadImage";
 import EditBiography from "./EditBiography";
-import { followUser } from "../actions/userActions";
 
 function Profile() {
   const userProfile = useSelector((state) => state.user.userProfile);
