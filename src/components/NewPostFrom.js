@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import formatDateToReadableDate from "../utils/utils";
-import { addPost } from "../actions/postActions";
+import { addPost, getAllPosts } from "../actions/postActions";
 
 function NewPostFrom() {
   const [loadPost, setLoadPost] = useState(true);
   const [message, setMessage] = useState("");
   const [postPicture, setPostPicture] = useState(null);
-  const [file, setFile] = useState(null);
+  const [picture, setPicture] = useState();
   const [video, setVideo] = useState(null);
   const dispatch = useDispatch();
   const usersProfile = useSelector((state) => state.user.userProfile);
@@ -30,34 +30,25 @@ function NewPostFrom() {
   };
 
   const handlePicture = (e) => {
+    e.preventDefault();
     setPostPicture(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
+    setPicture(e.target.files[0]);
     setVideo("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    /*const data = new FormData();
-    if (message || postPicture || video) {
-      data.append("posterId", userProfile._id);
-      data.append("message", message);
-      if (file) data.append("file", file);
-      data.append("video", video);
+    const data = new FormData();
+    data.append("posterId", userProfile._id);
+    data.append("message", message);
+    if (picture) {
+      data.append("picture", picture);
+    }
+    data.append("video", video);
 
-      await dispatch(addPost(data));
-
-      cancelPost();
-      console.log(data);
-    } else {
-      alert("Veuillez entrer un message");
-    }*/
-    const data = {
-      posterId: userProfile._id,
-      message: message,
-      file: file,
-      video,
-    };
     await dispatch(addPost(data));
+
+    dispatch(getAllPosts());
     cancelPost();
   };
 
@@ -65,7 +56,7 @@ function NewPostFrom() {
     setMessage("");
     setPostPicture("");
     setVideo("");
-    setFile("");
+    setPicture("");
   };
 
   useEffect(() => {
@@ -106,19 +97,19 @@ function NewPostFrom() {
                 <div className="mb-4 flex justify-between items-center">
                   <label
                     className="block text-gray-700 text-sm font-bold"
-                    htmlFor="image"
+                    htmlFor="picture"
                   >
                     Publier une image
                   </label>
                   <input
                     type="file"
                     accept=".jpg, .jpeg, .png"
-                    id="image"
+                    id="picture"
                     className="hidden"
-                    name="file"
+                    name="picture"
                     onChange={(e) => handlePicture(e)}
                   />
-                  <label htmlFor="image" className="cursor-pointer">
+                  <label htmlFor="picture" className="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6 text-blue-500 hover:text-blue-700"
@@ -157,6 +148,7 @@ function NewPostFrom() {
               </div>
             </form>
           </div>
+          {/*Prévisualisation*/}
           <div className="flex items-center justify-center mt-4">
             {message || postPicture || video ? (
               <div className="p-4  rounded-lg shadow-md">
