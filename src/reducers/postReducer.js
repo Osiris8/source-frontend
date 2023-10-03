@@ -6,7 +6,6 @@ import {
   DELETE_POST,
   EDIT_COMMENT,
   DELETE_COMMENT,
-  ADD_POST,
 } from "../actions/types";
 
 const initialState = {
@@ -116,11 +115,6 @@ const postReducer = (state = initialState, action) => {
           }
           return post;
         }),
-      };
-    case ADD_POST:
-      return {
-        ...state,
-        allPosts: [...state.allPosts, action.payload],
       };
 
     default:
