@@ -8,6 +8,7 @@ import EditDeleteComment from "./EditDeleteComment";
 function CommentPost({ post }) {
   const dispatch = useDispatch();
   const [comment, setComment] = useState("");
+
   const usersProfiles = useSelector((state) => state.users.allUsers);
   const userProfile = useSelector((state) => state.user.userProfile);
   //const posts = useSelector((state) => state.posts.allPosts);
@@ -73,6 +74,7 @@ function CommentPost({ post }) {
               placeholder="Ajouter un commentaire"
               className="w-full px-4 py-2 border border-black focus:outline-none focus:border-cyan-600 transition duration-300 rounded"
             />
+
             <button
               type="submit"
               className="bg-cyan-600 text-white px-4 py-2 mt-2 rounded hover:bg-cyan-700 transition duration-300"
