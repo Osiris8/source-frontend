@@ -31,9 +31,18 @@ function NewPostFrom() {
 
   const handlePicture = (e) => {
     e.preventDefault();
-    setPostPicture(URL.createObjectURL(e.target.files[0]));
-    setPicture(e.target.files[0]);
-    setVideo("");
+
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      // Vérifiez d'abord si selectedFile est défini
+      setPostPicture(URL.createObjectURL(selectedFile));
+      setPicture(selectedFile);
+      setVideo("");
+    } else {
+      // Gérez le cas où aucun fichier n'a été sélectionné
+      console.error("Aucun fichier sélectionné.");
+    }
   };
 
   const handleSubmit = async (e) => {
