@@ -7,8 +7,6 @@ import Card from "./Card";
 function Home() {
   const dispatch = useDispatch();
   const [loadPost, setLoadPost] = useState(true);
-  const usersProfiles = useSelector((state) => state.users.allUsers);
-  const userProfile = useSelector((state) => state.user.userProfile);
   const posts = useSelector((state) => state.posts.allPosts);
 
   useEffect(() => {
