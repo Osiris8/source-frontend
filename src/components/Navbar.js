@@ -24,11 +24,9 @@ function Navbar() {
         <Link to="/" className="text-white">
           Accueil
         </Link>
-        <Link to="/about" className="text-white">
-          À propos
-        </Link>
+
         {userProfile && userProfile.firstname && (
-          <Link to="/about" className="text-white">
+          <Link to="/profil" className="text-white">
             {userProfile.firstname}
           </Link>
         )}
