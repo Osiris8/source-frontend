@@ -103,7 +103,7 @@ function Login() {
         <div className="flex items-center justify-center m-5">
           <a
             className="inline-block align-baseline font-bold text-sm text-cyan-500 hover:text-cyan-800"
-            href="https://hello.com"
+            href="/Register"
           >
             S'inscrire
           </a>
