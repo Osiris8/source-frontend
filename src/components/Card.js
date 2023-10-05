@@ -57,26 +57,29 @@ function Card({ post }) {
                   </div>
 
                   {!isUpdate && <p className="mt-2">{post.message}</p>}
-                  <div>
-                    {post.picture && (
-                      <img
-                        src={post.picture.replace("/frontend/public", "")}
-                        alt={post._id}
-                        className="mt-2 rounded-lg w-full"
-                      />
-                    )}
-                    {post.video && (
-                      <iframe
-                        className="mt-2 rounded-lg w-full"
-                        title="YouTube video player"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        playsInline
-                        src={post.video.replace("/frontend/public", "")}
-                        frameBorder="0"
-                      ></iframe>
-                    )}
-                  </div>
+                  {post.picture || post.video ? (
+                    <div>
+                      {post.picture && (
+                        <img
+                          src={post.picture.replace("/frontend/public", "")}
+                          alt={post._id}
+                          className="mt-2 rounded-lg w-full"
+                        />
+                      )}
+                      {post.video && (
+                        <iframe
+                          className="mt-2 rounded-lg w-full"
+                          title="YouTube video player"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          playsInline
+                          src={post.video.replace("/frontend/public", "")}
+                        ></iframe>
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   {isUpdate && (
                     <div className="flex flex-col">
                       <textarea
