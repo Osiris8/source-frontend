@@ -188,7 +188,7 @@ function Register() {
                 </button>
                 <a
                   className="inline-block align-baseline font-bold text-sm text-cyan-500 hover:text-cyan-800"
-                  href="https://hello.com"
+                  href="/login"
                 >
                   Se connecter
                 </a>
